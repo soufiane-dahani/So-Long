@@ -6,7 +6,7 @@
 /*   By: sodahani <sodahani@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/09 14:37:34 by sodahani          #+#    #+#             */
-/*   Updated: 2025/01/09 21:26:10 by sodahani         ###   ########.fr       */
+/*   Updated: 2025/01/09 22:45:45 by sodahani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,6 +113,61 @@ char	**parse_map(const char *file_path, int *row_count)
 	return (map);
 }
 
+int	check_map_characters(char **map, int row_count)
+{
+	int	i;
+	int	j;
+	int	p;
+	int	e;
+	int	c;
+
+	i = 0;
+	p = 0;
+	e = 0;
+	c = 0;
+	while (i < row_count)
+	{
+		j = 0;
+		while (map[i][j] != '\n')
+		{
+			if (map[i][j] == 'P')
+				p++;
+			else if (map[i][j] == 'E')
+				e++;
+			else if (map[i][j] == 'C')
+				c++;
+			j++;
+		}
+		i++;
+	}
+	if (p != 1 || e != 1 || c <= 0)
+		return (1);
+	return (0);
+}
+
+int	validate_map_shape(char **map, int row_count)
+{
+	int	i;
+	int	first_row_length;
+	int	current_row_length;
+
+	if (row_count == 0 || !map)
+		return (1);
+	first_row_length = 0;
+	while (map[0][first_row_length] != '\0')
+		first_row_length++;
+	i = 1;
+	while (i < row_count)
+	{
+		current_row_length = 0;
+		while (map[i][current_row_length] != '\0')
+			current_row_length++;
+		if (current_row_length != first_row_length)
+			return (1);
+	}
+	return (0);
+}
+
 int	main(int argc, char *argv[])
 {
 	int		row_count;
@@ -130,9 +185,10 @@ int	main(int argc, char *argv[])
 		write(STDERR_FILENO, "Error: Failed to parse map\n", 27);
 		return (EXIT_FAILURE);
 	}
-	for (int i = 0; i < row_count; i++)
+	if (check_map_characters(map, row_count))
 	{
-		write(STDOUT_FILENO, map[i], ft_strlen(map[i]));
+		write(STDERR_FILENO, "Error: char in map\n", 19);
+		return (EXIT_FAILURE);
 	}
 	free_string_array(map);
 	return (EXIT_SUCCESS);
