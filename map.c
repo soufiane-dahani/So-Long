@@ -6,7 +6,7 @@
 /*   By: sodahani <sodahani@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/07 18:09:03 by sodahani          #+#    #+#             */
-/*   Updated: 2025/01/10 11:28:20 by sodahani         ###   ########.fr       */
+/*   Updated: 2025/01/10 15:42:16 by sodahani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -155,4 +155,31 @@ int validate_map_shape(char **map, int row_count)
             return (1);
     }
     return (0);
+}
+int	ensure_the_map_is_surrounded_by_walls(char **map, int row_count)
+{
+	int	i;
+	int	len;
+
+	i = 0;
+	if (!map || row_count <= 0)
+		return (1);
+	len = 0;
+	while (map[0][len] && map[0][len] != '\n')
+		len++;
+	for (i = 0; i < len; i++)
+	{
+		if (map[0][i] != '1')
+			return (1);
+		if (map[row_count - 1][i] != '1')
+			return (1);
+	}
+	for (i = 0; i < row_count; i++)
+	{
+		if (map[i][0] != '1')
+			return (1);
+		if (map[i][len - 1] != '1')
+			return (1);
+	}
+	return (0);
 }

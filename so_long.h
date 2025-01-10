@@ -6,7 +6,7 @@
 /*   By: sodahani <sodahani@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/07 17:25:31 by sodahani          #+#    #+#             */
-/*   Updated: 2025/01/10 11:29:20 by sodahani         ###   ########.fr       */
+/*   Updated: 2025/01/10 15:41:45 by sodahani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,11 +18,7 @@
 # include <stdio.h>
 # include "mlx.h"
 
-#define WALL '1'
-#define SPACE '0'
-#define COLLECTIBLE 'C'
-#define EXIT 'E'
-#define PLAYER 'P'
+
 
 typedef struct s_map {
     char **grid;
@@ -38,5 +34,6 @@ int search_ber(const char *file_path);
 char **parse_map(const char *file_path, int *row_count);
 int check_map_characters(char **map, int row_count);
 int validate_map_shape(char **map, int row_count);
+int	ensure_the_map_is_surrounded_by_walls(char **map, int row_count);
 
 #endif
