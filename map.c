@@ -6,180 +6,91 @@
 /*   By: sodahani <sodahani@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/07 18:09:03 by sodahani          #+#    #+#             */
-/*   Updated: 2025/01/10 15:42:16 by sodahani         ###   ########.fr       */
+/*   Updated: 2025/01/12 18:36:50 by sodahani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 
-
-int search_ber(const char *file_path)
+char	**parse_map(const char *file_path, int *row_count)
 {
-    size_t len;
+	t_parse_vars	vars;
 
-    if (!file_path)
-        return (0);
-    len = ft_strlen(file_path);
-    if (len < 4)
-        return (0);
-    return (file_path[len - 4] == '.' &&
-            file_path[len - 3] == 'b' &&
-            file_path[len - 2] == 'e' &&
-            file_path[len - 1] == 'r');
+	if (!file_path || !row_count || !search_ber(file_path))
+	{
+		if (file_path)
+			write(STDERR_FILENO, "Error: File should be .ber\n", 26);
+		return (NULL);
+	}
+	if (!init_map_vars(&vars, file_path))
+		return (NULL);
+	vars.map = read_map_lines(&vars);
+	if (!vars.map)
+		return (NULL);
+	*row_count = vars.rows;
+	return (vars.map);
 }
 
-char **parse_map(const char *file_path, int *row_count)
+int	check_map_characters(char **map, int row_count)
 {
-    int     fd;
-    char    **map;
-    char    *line;
-    int     rows;
-    int     capacity;
-    char    **new_map;
+	t_check_vars	vars;
 
-    if (!file_path || !row_count)
-        return (NULL);
-    
-    if (!search_ber(file_path))
-    {
-        write(STDERR_FILENO, "Error: File should be .ber\n", 26);
-        return (NULL);
-    }
-
-    capacity = 16;
-    rows = 0;
-    map = malloc(sizeof(char *) * capacity);
-    if (!map)
-        return (NULL);
-
-    fd = open(file_path, O_RDONLY);
-    if (fd < 0)
-    {
-        free(map);
-        return (NULL);
-    }
-
-    while ((line = get_next_line(fd)) != NULL)
-    {
-        if (rows >= capacity - 1)
-        {
-            capacity *= 2;
-            new_map = malloc(sizeof(char *) * capacity);
-            if (!new_map)
-            {
-                free_string_array(map);
-                free(line);
-                close(fd);
-                return (NULL);
-            }
-            for (int i = 0; i < rows; i++)
-                new_map[i] = map[i];
-            free(map);
-            map = new_map;
-        }
-        map[rows] = ft_strdup(line);
-        if (!map[rows])
-        {
-            free_string_array(map);
-            free(line);
-            close(fd);
-            return (NULL);
-        }
-        free(line);
-        rows++;
-    }
-    close(fd);
-    map[rows] = NULL;
-    *row_count = rows;
-    return (map);
+	if (!map || row_count <= 0)
+		return (1);
+	vars.p = 0;
+	vars.e = 0;
+	vars.c = 0;
+	vars.i = 0;
+	while (vars.i < row_count)
+	{
+		if (!map[vars.i])
+			return (1);
+		vars.j = 0;
+		while (map[vars.i][vars.j] != '\0' && map[vars.i][vars.j] != '\n')
+		{
+			if (check_char(map[vars.i][vars.j], &vars.p, &vars.e, &vars.c))
+				return (1);
+			vars.j++;
+		}
+		vars.i++;
+	}
+	return (vars.p != 1 || vars.e != 1 || vars.c <= 0);
 }
 
-int check_map_characters(char **map, int row_count)
+int	validate_map_shape(char **map, int row_count)
 {
-    int i;
-    int j;
-    int p;
-    int e;
-    int c;
+	int		i;
+	size_t	first_row_length;
+	size_t	current_row_length;
 
-    if (!map || row_count <= 0)
-        return (1);
-
-    p = 0;
-    e = 0;
-    c = 0;
-    
-    for (i = 0; i < row_count; i++)
-    {
-        if (!map[i])
-            return (1);
-            
-        for (j = 0; map[i][j] != '\0' && map[i][j] != '\n'; j++)
-        {
-            if (map[i][j] == 'P')
-                p++;
-            else if (map[i][j] == 'E')
-                e++;
-            else if (map[i][j] == 'C')
-                c++;
-            else if (map[i][j] != '0' && map[i][j] != '1')
-                return (1);
-        }
-    }
-    return (p != 1 || e != 1 || c <= 0);
+	if (row_count <= 0 || !map || !map[0])
+		return (1);
+	first_row_length = get_row_length(map[0]);
+	i = 1;
+	while (i < row_count)
+	{
+		if (!map[i])
+			return (1);
+		current_row_length = get_row_length(map[i]);
+		if (current_row_length != first_row_length)
+			return (1);
+		i++;
+	}
+	return (0);
 }
 
-int validate_map_shape(char **map, int row_count)
-{
-    int i;
-    size_t first_row_length;
-    size_t current_row_length;
-
-    if (row_count <= 0 || !map || !map[0])
-        return (1);
-
-    first_row_length = 0;
-    while (map[0][first_row_length] && map[0][first_row_length] != '\n')
-        first_row_length++;
-
-    for (i = 1; i < row_count; i++)
-    {
-        if (!map[i])
-            return (1);
-            
-        current_row_length = 0;
-        while (map[i][current_row_length] && map[i][current_row_length] != '\n')
-            current_row_length++;
-
-        if (current_row_length != first_row_length)
-            return (1);
-    }
-    return (0);
-}
 int	ensure_the_map_is_surrounded_by_walls(char **map, int row_count)
 {
-	int	i;
 	int	len;
 
-	i = 0;
 	if (!map || row_count <= 0)
 		return (1);
 	len = 0;
 	while (map[0][len] && map[0][len] != '\n')
 		len++;
-	for (i = 0; i < len; i++)
-	{
-		if (map[0][i] != '1')
-			return (1);
-		if (map[row_count - 1][i] != '1')
-			return (1);
-	}
-	for (i = 0; i < row_count; i++)
-	{
-		if (map[i][0] != '1')
-			return (1);
-		if (map[i][len - 1] != '1')
-			return (1);
-	}
+	if (check_horizontal_walls(map, row_count, len))
+		return (1);
+	if (check_vertical_walls(map, row_count, len))
+		return (1);
 	return (0);
 }

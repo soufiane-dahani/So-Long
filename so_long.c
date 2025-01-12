@@ -13,37 +13,28 @@
 #include "so_long.h"
 #include <mlx.h>
 
-
-
-
-
-
-
 int	main(int argc, char *argv[])
 {
-	int row_count;
-	char **map;
+	int		row_count;
+	char	**map;
 
 	if (argc != 2)
 	{
 		write(STDERR_FILENO, "Error: Invalid arguments\n", 24);
 		return (EXIT_FAILURE);
 	}
-
 	map = parse_map(argv[1], &row_count);
 	if (!map)
 	{
 		write(STDERR_FILENO, "Error: Failed to parse map\n", 26);
 		return (EXIT_FAILURE);
 	}
-
 	if (check_map_characters(map, row_count))
 	{
 		write(STDERR_FILENO, "Error: Invalid map characters\n", 29);
 		free_string_array(map);
 		return (EXIT_FAILURE);
 	}
-
 	if (validate_map_shape(map, row_count))
 	{
 		write(STDERR_FILENO, "Error: Map is not rectangular\n", 29);
@@ -57,12 +48,12 @@ int	main(int argc, char *argv[])
 		free_string_array(map);
 		return (EXIT_FAILURE);
 	}
-    if (validate_path(map, row_count))
-    {
-	write(STDERR_FILENO, "Error: Unreachable paths in map\n", 32);
-	free_string_array(map);
-	return (EXIT_FAILURE);
-    }
+	if (validate_path(map, row_count))
+	{
+		write(STDERR_FILENO, "Error: Unreachable paths in map\n", 32);
+		free_string_array(map);
+		return (EXIT_FAILURE);
+	}
 	free_string_array(map);
 	return (EXIT_SUCCESS);
 }

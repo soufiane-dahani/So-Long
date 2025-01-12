@@ -10,8 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "so_long.h"
 #include "get_next_line.h"
+#include "so_long.h"
 
 void	free_string_array(char **arr)
 {

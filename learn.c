@@ -1,6 +1,5 @@
 // #include "so_long.h"
 
-
 // #include <mlx.h>
 
 // int	main(void)
@@ -26,6 +25,3 @@
 
 //     return (0);
 // }
-
-
-
