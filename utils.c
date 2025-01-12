@@ -6,10 +6,21 @@
 /*   By: sodahani <sodahani@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/07 18:10:38 by sodahani          #+#    #+#             */
-/*   Updated: 2025/01/09 12:35:32 by sodahani         ###   ########.fr       */
+/*   Updated: 2025/01/12 17:44:04 by sodahani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 #include "get_next_line.h"
 
+void	free_string_array(char **arr)
+{
+	int	i;
+
+	i = 0;
+	if (!arr)
+		return ;
+	while (arr[i])
+		free(arr[i++]);
+	free(arr);
+}
