@@ -6,23 +6,36 @@
 /*   By: sodahani <sodahani@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/09 14:37:34 by sodahani          #+#    #+#             */
-/*   Updated: 2025/01/12 18:01:28 by sodahani         ###   ########.fr       */
+/*   Updated: 2025/01/12 19:11:10 by sodahani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 #include <mlx.h>
 
+
+
+
 int	main(int argc, char *argv[])
 {
+	void *mlx;
+	void *win;
 	int		row_count;
 	char	**map;
+	int tile_size = 32;
+    int rows = 10;
+    int cols = 10;
+    int win_width = cols * tile_size;
+    int win_height = rows * tile_size;
 
 	if (argc != 2)
 	{
 		write(STDERR_FILENO, "Error: Invalid arguments\n", 24);
 		return (EXIT_FAILURE);
 	}
+	mlx = mlx_init();
+	win = mlx_new_window(mlx, win_width, win_height, "So Long Game");
+	
 	map = parse_map(argv[1], &row_count);
 	if (!map)
 	{
@@ -55,5 +68,6 @@ int	main(int argc, char *argv[])
 		return (EXIT_FAILURE);
 	}
 	free_string_array(map);
+	mlx_loop(mlx);
 	return (EXIT_SUCCESS);
 }
