@@ -6,7 +6,7 @@
 /*   By: sodahani <sodahani@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/07 17:25:31 by sodahani          #+#    #+#             */
-/*   Updated: 2025/01/12 18:42:57 by sodahani         ###   ########.fr       */
+/*   Updated: 2025/01/13 16:29:52 by sodahani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,32 @@ typedef struct s_check_vars
 	int		c;
 }			t_check_vars;
 
+
+
+typedef struct s_images
+{
+	void	*wall;
+	void	*floor;
+	void	*collectible;
+	void	*exit;
+	void	*player;
+}	t_images;
+
+typedef struct s_game {
+    void    *mlx;
+    void    *win;
+    int     win_width;
+    int     win_height;
+	char		**map; 
+	int			rows;   
+	int			cols;
+	int			tile_size;
+	int   collectibles;
+	int collected;
+	int moves;
+	t_images	*images;
+} t_game;
+
 char		**parse_map(const char *file_path, int *row_count);
 void		free_string_array(char **arr);
 int			search_ber(const char *file_path);
@@ -69,5 +95,7 @@ char		**read_map_lines(t_parse_vars *vars);
 size_t		get_row_length(char *row);
 int			check_horizontal_walls(char **map, int row_count, int len);
 int			check_vertical_walls(char **map, int row_count, int len);
-
+void    error_exit(const char *message);
+void    init_window(t_game *game, int rows, int cols, int tile_size);
+void	free_img(void *mlx, t_images *images);
 #endif
