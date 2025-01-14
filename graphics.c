@@ -6,7 +6,7 @@
 /*   By: sodahani <sodahani@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/07 18:10:00 by sodahani          #+#    #+#             */
-/*   Updated: 2025/01/13 11:35:06 by sodahani         ###   ########.fr       */
+/*   Updated: 2025/01/14 12:17:57 by sodahani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,17 +20,29 @@ void    error_exit(const char *message)
     exit(EXIT_FAILURE);
 }
 
-void    init_window(t_game *game, int rows, int cols, int tile_size)
-{
-    game->win_width = cols * tile_size;
-    game->win_height = rows * tile_size;
-
+void    init_window(t_game *game, int rows, int cols, int tile_size) {
+    if (!game)
+        return;
+        
+    game->tile_size = tile_size;
+    game->rows = rows;
+    game->cols = cols;
+    
+    // Initialize MLX
     game->mlx = mlx_init();
     if (!game->mlx)
-        error_exit("Error: MiniLibX initialization failed");
-
-    game->win = mlx_new_window(game->mlx, game->win_width, game->win_height, "So Long Game");
-    if (!game->win)
-        error_exit("Error: Window creation failed");
+        return;
+        
+    // Create window with the correct dimensions
+    game->win = mlx_new_window(game->mlx, 
+                              cols * tile_size,
+                              rows * tile_size,
+                              "So Long!");
+                              
+    if (!game->win) {
+        mlx_destroy_display(game->mlx);
+        free(game->mlx);
+        game->mlx = NULL;
+    }
 }
 
