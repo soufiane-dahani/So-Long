@@ -6,7 +6,7 @@
 /*   By: sodahani <sodahani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/07 17:25:31 by sodahani          #+#    #+#             */
-/*   Updated: 2025/01/15 09:52:50 by sodahani         ###   ########.fr       */
+/*   Updated: 2025/01/15 13:46:30 by sodahani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,8 @@ typedef struct s_game
 	int			collectibles;
 	int			collected;
 	int			moves;
+	int			player_row;
+	int			player_col;
 	t_images	*images;
 }				t_game;
 
