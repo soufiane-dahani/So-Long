@@ -6,7 +6,7 @@
 /*   By: sodahani <sodahani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/12 19:05:28 by sodahani          #+#    #+#             */
-/*   Updated: 2025/01/15 09:53:11 by sodahani         ###   ########.fr       */
+/*   Updated: 2025/01/15 10:34:34 by sodahani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,4 +42,21 @@ void	render_map(t_game *game)
 		}
 		row++;
 	}
+}
+
+int	handle_keypress(int key, t_game *game)
+{
+	if (key == 65307)
+	{
+		cleanup_game(game);
+		exit(EXIT_SUCCESS);
+	}
+	return (0);
+}
+
+int	handle_close(t_game *game)
+{
+	cleanup_game(game);
+	exit(EXIT_SUCCESS);
+	return (0);
 }

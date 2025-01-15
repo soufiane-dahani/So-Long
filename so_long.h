@@ -75,8 +75,8 @@ int				search_ber(const char *file_path);
 char			**parse_map(const char *file_path, int *row_count);
 int				check_map_characters(char **map, int row_count);
 int				validate_map_shape(char **map, int row_count);
-int				ensure_the_map_is_surrounded_by_walls(char **map,
-					int row_count);
+int	ensure_the_map_is_surrounded_by_walls(char **map,
+											int row_count);
 void			free_visited(int **visited, int rows);
 int				count_and_check(char **map, t_map_info *info, int *reachable);
 int				init_visited_and_player(char **map, t_map_info *info);

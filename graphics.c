@@ -30,9 +30,9 @@ void	init_window(t_game *game, int rows, int cols, int tile_size)
 	if (!game->mlx)
 		return ;
 	game->win = mlx_new_window(game->mlx,
-			cols * tile_size,
-			rows * tile_size,
-			"So Long!");
+								cols * tile_size,
+								rows * tile_size,
+								"So Long!");
 	if (!game->win)
 	{
 		mlx_destroy_display(game->mlx);

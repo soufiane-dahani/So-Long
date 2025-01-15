@@ -3,28 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   so_long.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sodahani <sodahani@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: sodahani <sodahani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/09 14:37:34 by sodahani          #+#    #+#             */
-/*   Updated: 2025/01/14 16:04:25 by sodahani         ###   ########.fr       */
+/*   Updated: 2025/01/15 10:33:31 by sodahani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
-
-int	handle_keypress(int key, t_game *game)
-{
-	if (key == 53)
-		cleanup_game(game);
-	return (0);
-}
-
-int	handle_close(t_game *game)
-{
-	cleanup_game(game);
-	exit(EXIT_SUCCESS);
-	return (0);
-}
 
 int	main(int argc, char *argv[])
 {
@@ -68,6 +54,8 @@ int	main(int argc, char *argv[])
 		return (EXIT_FAILURE);
 	}
 	render_map(&game);
+	mlx_hook(game.win, 2, 1L << 0, handle_keypress, &game);
+	mlx_hook(game.win, 17, 0, handle_close, &game);
 	mlx_loop(game.mlx);
 	return (EXIT_SUCCESS);
 }
