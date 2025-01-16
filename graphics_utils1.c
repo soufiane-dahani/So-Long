@@ -6,7 +6,7 @@
 /*   By: sodahani <sodahani@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/12 19:05:33 by sodahani          #+#    #+#             */
-/*   Updated: 2025/01/16 11:04:01 by sodahani         ###   ########.fr       */
+/*   Updated: 2025/01/16 13:44:35 by sodahani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,10 @@ int	handle_keypress(int key, t_game *game)
 	}
 	player_postion_move(game->map, &old_pos.col, &old_pos.row);
 	new_pos = get_new_position(old_pos, key);
-	move_player(game, old_pos, new_pos);
-	move_to_exit(game, old_pos, new_pos);
+	if (new_pos.col != old_pos.col || new_pos.row != old_pos.row)
+	{
+		move_player(game, old_pos, new_pos);
+		move_to_exit(game, old_pos, new_pos);
+	}
 	return (0);
 }
