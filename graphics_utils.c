@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   graphics_utils.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sodahani <sodahani@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sodahani <sodahani@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/12 19:05:28 by sodahani          #+#    #+#             */
-/*   Updated: 2025/01/15 13:46:47 by sodahani         ###   ########.fr       */
+/*   Updated: 2025/01/16 11:07:01 by sodahani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 static void	put_image(t_game *game, void *img, int col, int row)
 {
 	mlx_put_image_to_window(game->mlx, game->win, img, col * game->tile_size,
-			row * game->tile_size);
+		row * game->tile_size);
 }
 
 void	render_map(t_game *game)
@@ -44,8 +44,6 @@ void	render_map(t_game *game)
 	}
 }
 
-
-
 int	handle_close(t_game *game)
 {
 	cleanup_game(game);
@@ -53,5 +51,46 @@ int	handle_close(t_game *game)
 	return (0);
 }
 
+int	number_of_c(char **map)
+{
+	int	i;
+	int	j;
+	int	c;
 
+	i = 0;
+	c = 0;
+	while (map[i] != NULL)
+	{
+		j = 0;
+		while (map[i][j] != '\0')
+		{
+			if (map[i][j] == 'C')
+				c++;
+			j++;
+		}
+		i++;
+	}
+	return (c);
+}
 
+int	number_of_e(char **map)
+{
+	int	i;
+	int	j;
+	int	c;
+
+	i = 0;
+	c = 0;
+	while (map[i] != NULL)
+	{
+		j = 0;
+		while (map[i][j] != '\0')
+		{
+			if (map[i][j] == 'E')
+				c++;
+			j++;
+		}
+		i++;
+	}
+	return (c);
+}

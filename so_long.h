@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   so_long.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sodahani <sodahani@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sodahani <sodahani@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/07 17:25:31 by sodahani          #+#    #+#             */
-/*   Updated: 2025/01/15 13:46:30 by sodahani         ###   ########.fr       */
+/*   Updated: 2025/01/16 11:09:05 by sodahani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,14 +71,20 @@ typedef struct s_game
 	t_images	*images;
 }				t_game;
 
+typedef struct s_move
+{
+	int	row;
+	int	col;
+}	t_move;
+
 char			**parse_map(const char *file_path, int *row_count);
 void			free_string_array(char **arr);
 int				search_ber(const char *file_path);
 char			**parse_map(const char *file_path, int *row_count);
 int				check_map_characters(char **map, int row_count);
 int				validate_map_shape(char **map, int row_count);
-int	ensure_the_map_is_surrounded_by_walls(char **map,
-											int row_count);
+int				ensure_the_map_is_surrounded_by_walls(char **map,
+					int row_count);
 void			free_visited(int **visited, int rows);
 int				count_and_check(char **map, t_map_info *info, int *reachable);
 int				init_visited_and_player(char **map, t_map_info *info);
@@ -106,5 +112,13 @@ int				handle_keypress(int key, t_game *game);
 int				handle_close(t_game *game);
 void			cleanup_game(t_game *game);
 t_images		*load_images(void *mlx, int tile_size);
+void			player_postion_move(char **map, int *new_col, int *new_row);
+int				number_of_c(char **map);
+int				number_of_e(char **map);
+int				is_valid_move(t_game *game, t_move new_pos);
+void			update_position(t_game *game, t_move old_pos, t_move new_pos);
+void			move_player(t_game *game, t_move old_pos, t_move new_pos);
+void			move_to_exit(t_game *game, t_move old_pos, t_move new_pos);
+t_move			get_new_position(t_move curr_pos, int key);
 
 #endif

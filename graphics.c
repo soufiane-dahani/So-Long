@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   graphics.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sodahani <sodahani@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sodahani <sodahani@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/07 18:10:00 by sodahani          #+#    #+#             */
-/*   Updated: 2025/01/15 09:51:45 by sodahani         ###   ########.fr       */
+/*   Updated: 2025/01/16 11:06:42 by sodahani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,9 +30,9 @@ void	init_window(t_game *game, int rows, int cols, int tile_size)
 	if (!game->mlx)
 		return ;
 	game->win = mlx_new_window(game->mlx,
-								cols * tile_size,
-								rows * tile_size,
-								"So Long!");
+			cols * tile_size,
+			rows * tile_size,
+			"So Long!");
 	if (!game->win)
 	{
 		mlx_destroy_display(game->mlx);

@@ -3,83 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   so_long.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sodahani <sodahani@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sodahani <sodahani@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/09 14:37:34 by sodahani          #+#    #+#             */
-/*   Updated: 2025/01/15 13:47:15 by sodahani         ###   ########.fr       */
+/*   Updated: 2025/01/16 11:05:14 by sodahani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
-
-void player_postion_move(char **map, int *new_col, int *new_row)
-{
-    int i = 0;
-    int j;
-    int len = ft_strlen(map[0]);
-
-    while (i < len)
-    {
-        j = 0;
-        while (map[i][j] != '\0')
-        {
-            if (map[i][j] == 'P')
-            {
-                *new_row = i;
-                *new_col = j;
-                return;
-            }
-            j++;
-        }
-        i++;
-    }
-}
-
-
-int	handle_keypress(int key, t_game *game)
-{
-	int	new_row;
-	int	new_col;
-	int	old_row;
-	int	old_col;
-
-	if (!game)
-		return (1);
-	if (key == 65307)
-	{
-		cleanup_game(game);
-		exit(EXIT_SUCCESS);
-	}
-	player_postion_move(game->map, &new_col, &new_row);
-	old_col = new_col;
-	old_row = new_row;
-	if (key == 119)
-		new_row -= 1;
-	else if (key == 97)
-		new_col -= 1;
-	else if (key == 115)
-		new_row += 1;
-	else if (key == 100)
-		new_col += 1;
-	if (new_row >= 0 && new_row < game->rows &&
-		new_col >= 0 && new_col < game->cols &&
-		game->map[new_row][new_col] != '1')
-	{
-		game->map[old_row][old_col] = '0';
-		game->map[new_row][new_col] = 'P';
-		game->player_row = new_row;
-		game->player_col = new_col;
-		game->moves++;
-		ft_printf("moves : %d\n", game->moves);
-		mlx_clear_window(game->mlx, game->win);
-		render_map(game);
-	}
-	return (0);
-}
-
-
-
-
 
 int	main(int argc, char *argv[])
 {
