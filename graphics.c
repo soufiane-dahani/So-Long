@@ -6,7 +6,7 @@
 /*   By: sodahani <sodahani@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/07 18:10:00 by sodahani          #+#    #+#             */
-/*   Updated: 2025/01/19 10:20:09 by sodahani         ###   ########.fr       */
+/*   Updated: 2025/01/19 21:42:26 by sodahani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,9 +30,9 @@ void	init_window(t_game *game, int rows, int cols, int tile_size)
 	if (!game->mlx)
 		return ;
 	game->win = mlx_new_window(game->mlx,
-			cols * tile_size,
-			rows * tile_size,
-			"So Long!");
+					cols * tile_size,
+					rows * tile_size,
+					"So Long!");
 	if (!game->win)
 	{
 		mlx_destroy_display(game->mlx);
@@ -53,8 +53,8 @@ void	free_img(void *mlx, t_images *images)
 		mlx_destroy_image(mlx, images->collectible);
 	if (images->exit)
 		mlx_destroy_image(mlx, images->exit);
-	if (images->player)
-		mlx_destroy_image(mlx, images->player);
+	if (images->enemy)
+		mlx_destroy_image(mlx, images->enemy);
 	free(images);
 }
 
@@ -90,10 +90,15 @@ t_images	*load_images(void *mlx, int tile_size)
 			&tile_size, &tile_size);
 	images->exit = mlx_xpm_file_to_image(mlx, "textures/exit.xpm", &tile_size,
 			&tile_size);
-	images->player = mlx_xpm_file_to_image(mlx, "textures/player.xpm",
-			&tile_size, &tile_size);
+	images->enemy = mlx_xpm_file_to_image(mlx, "textures/enemy.xpm", &tile_size,
+			&tile_size);
+	if (!load_player_frames(mlx, images, tile_size))
+	{
+		free_img(mlx, images);
+		return (NULL);
+	}
 	if (!images->wall || !images->floor || !images->collectible || !images->exit
-		|| !images->player)
+		|| !images->enemy)
 	{
 		free_img(mlx, images);
 		return (NULL);

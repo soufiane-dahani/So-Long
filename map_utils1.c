@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map_utils1.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sodahani <sodahani@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sodahani <sodahani@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/12 18:07:57 by sodahani          #+#    #+#             */
-/*   Updated: 2025/01/16 22:00:00 by sodahani         ###   ########.fr       */
+/*   Updated: 2025/01/19 18:05:00 by sodahani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,7 @@ int	check_char(char charr, int *p, int *e, int *c)
 		(*e)++;
 	else if (charr == 'C')
 		(*c)++;
-	else if (charr != '0' && charr != '1')
+	else if (charr != '0' && charr != '1' && charr != 'F')
 		return (1);
 	return (0);
 }

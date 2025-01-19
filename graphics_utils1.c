@@ -6,7 +6,7 @@
 /*   By: sodahani <sodahani@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/12 19:05:33 by sodahani          #+#    #+#             */
-/*   Updated: 2025/01/16 13:44:35 by sodahani         ###   ########.fr       */
+/*   Updated: 2025/01/19 21:43:13 by sodahani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,8 @@ void	update_position(t_game *game, t_move old_pos, t_move new_pos)
 void	move_player(t_game *game, t_move old_pos, t_move new_pos)
 {
 	if (is_valid_move(game, new_pos)
-		&& game->map[new_pos.row][new_pos.col] != 'E')
+		&& game->map[new_pos.row][new_pos.col] != 'E'
+		&& game->map[new_pos.row][new_pos.col] != 'F')
 	{
 		update_position(game, old_pos, new_pos);
 		game->collectibles = number_of_c(game->map);
@@ -36,7 +37,8 @@ void	move_player(t_game *game, t_move old_pos, t_move new_pos)
 
 void	move_to_exit(t_game *game, t_move old_pos, t_move new_pos)
 {
-	if (is_valid_move(game, new_pos) && game->collectibles == 0)
+	if (is_valid_move(game, new_pos) && game->collectibles == 0
+	&& game->map[new_pos.row][new_pos.col] != 'F')
 	{
 		update_position(game, old_pos, new_pos);
 		if (number_of_e(game->map) == 0)

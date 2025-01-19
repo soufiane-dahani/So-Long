@@ -6,7 +6,7 @@
 /*   By: sodahani <sodahani@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/07 17:25:31 by sodahani          #+#    #+#             */
-/*   Updated: 2025/01/19 10:19:28 by sodahani         ###   ########.fr       */
+/*   Updated: 2025/01/19 19:16:39 by sodahani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,8 @@ typedef struct s_images
 	void		*floor;
 	void		*collectible;
 	void		*exit;
-	void		*player;
+	void		*player[6];
+	void		*enemy;
 }				t_images;
 
 typedef struct s_game
@@ -69,6 +70,7 @@ typedef struct s_game
 	int			moves;
 	int			player_row;
 	int			player_col;
+	int			player_frame;
 	t_images	*images;
 }				t_game;
 
@@ -84,8 +86,8 @@ int				search_ber(const char *file_path);
 char			**parse_map(const char *file_path, int *row_count);
 int				check_map_characters(char **map, int row_count);
 int				validate_map_shape(char **map, int row_count);
-int				ensure_the_map_is_surrounded_by_walls(char **map,
-					int row_count);
+int	ensure_the_map_is_surrounded_by_walls(char **map,
+											int row_count);
 void			free_visited(int **visited, int rows);
 int				count_and_check(char **map, t_map_info *info, int *reachable);
 int				init_visited_and_player(char **map, t_map_info *info);
@@ -121,5 +123,8 @@ void			update_position(t_game *game, t_move old_pos, t_move new_pos);
 void			move_player(t_game *game, t_move old_pos, t_move new_pos);
 void			move_to_exit(t_game *game, t_move old_pos, t_move new_pos);
 t_move			get_new_position(t_move curr_pos, int key);
+
+int				load_player_frames(void *mlx, t_images *images, int tile_size);
+void			put_image(t_game *game, void *img, int col, int row);
 
 #endif

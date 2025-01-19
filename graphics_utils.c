@@ -6,16 +6,16 @@
 /*   By: sodahani <sodahani@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/12 19:05:28 by sodahani          #+#    #+#             */
-/*   Updated: 2025/01/19 10:19:45 by sodahani         ###   ########.fr       */
+/*   Updated: 2025/01/19 21:38:19 by sodahani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 
-static void	put_image(t_game *game, void *img, int col, int row)
+void	put_image(t_game *game, void *img, int col, int row)
 {
 	mlx_put_image_to_window(game->mlx, game->win, img, col * game->tile_size,
-		row * game->tile_size);
+			row * game->tile_size);
 }
 
 void	render_map(t_game *game)
@@ -36,8 +36,8 @@ void	render_map(t_game *game)
 				put_image(game, game->images->collectible, col, row);
 			else if (game->map[row][col] == 'E')
 				put_image(game, game->images->exit, col, row);
-			else if (game->map[row][col] == 'P')
-				put_image(game, game->images->player, col, row);
+			else if (game->map[row][col] == 'F')
+				put_image(game, game->images->enemy, col, row);
 			col++;
 		}
 		row++;
