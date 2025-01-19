@@ -6,7 +6,7 @@
 /*   By: sodahani <sodahani@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/07 17:25:31 by sodahani          #+#    #+#             */
-/*   Updated: 2025/01/16 11:09:05 by sodahani         ###   ########.fr       */
+/*   Updated: 2025/01/19 10:19:28 by sodahani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 # include "ft_printf.h"
 # include "get_next_line.h"
 # include "mlx.h"
+# include <X11/X.h>
 # include <stdio.h>
 
 typedef struct s_map_info
@@ -73,9 +74,9 @@ typedef struct s_game
 
 typedef struct s_move
 {
-	int	row;
-	int	col;
-}	t_move;
+	int			row;
+	int			col;
+}				t_move;
 
 char			**parse_map(const char *file_path, int *row_count);
 void			free_string_array(char **arr);

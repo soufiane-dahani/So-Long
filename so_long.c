@@ -6,7 +6,7 @@
 /*   By: sodahani <sodahani@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/09 14:37:34 by sodahani          #+#    #+#             */
-/*   Updated: 2025/01/16 11:05:14 by sodahani         ###   ########.fr       */
+/*   Updated: 2025/01/16 22:12:26 by sodahani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,8 +54,8 @@ int	main(int argc, char *argv[])
 		return (EXIT_FAILURE);
 	}
 	render_map(&game);
-	mlx_hook(game.win, 2, 1L << 0, handle_keypress, &game);
-	mlx_hook(game.win, 17, 0, handle_close, &game);
+	mlx_hook(game.win, KeyPress, KeyPressMask, handle_keypress, &game);
+	mlx_hook(game.win, DestroyNotify, NoEventMask, handle_close, &game);
 	mlx_loop(game.mlx);
 	return (EXIT_SUCCESS);
 }

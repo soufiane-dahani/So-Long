@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map_utils1.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sodahani <sodahani@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: sodahani <sodahani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/12 18:07:57 by sodahani          #+#    #+#             */
-/*   Updated: 2025/01/14 15:33:47 by sodahani         ###   ########.fr       */
+/*   Updated: 2025/01/16 22:00:00 by sodahani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,8 @@ void	flood_fill(char **map, t_map_info *info, int row, int col)
 	if (info->visited[row][col] || map[row][col] == '1')
 		return ;
 	info->visited[row][col] = 1;
+	if (map[row][col] == 'E')
+		return ;
 	flood_fill(map, info, row + 1, col);
 	flood_fill(map, info, row - 1, col);
 	flood_fill(map, info, row, col + 1);
