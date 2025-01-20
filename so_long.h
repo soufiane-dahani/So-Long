@@ -6,7 +6,7 @@
 /*   By: sodahani <sodahani@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/07 17:25:31 by sodahani          #+#    #+#             */
-/*   Updated: 2025/01/19 19:16:39 by sodahani         ###   ########.fr       */
+/*   Updated: 2025/01/20 11:54:29 by sodahani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,5 +126,8 @@ t_move			get_new_position(t_move curr_pos, int key);
 
 int				load_player_frames(void *mlx, t_images *images, int tile_size);
 void			put_image(t_game *game, void *img, int col, int row);
+void			*ft_memset(void *s, int c, size_t n);
+void			cleanup_images(void *mlx, t_images *images);
+void			move_game_over(t_game *game, t_move old_pos, t_move new_pos);
 
 #endif

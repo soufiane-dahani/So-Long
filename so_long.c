@@ -6,7 +6,7 @@
 /*   By: sodahani <sodahani@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/09 14:37:34 by sodahani          #+#    #+#             */
-/*   Updated: 2025/01/19 21:41:37 by sodahani         ###   ########.fr       */
+/*   Updated: 2025/01/20 11:14:29 by sodahani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,15 +27,16 @@ int	load_player_frames(void *mlx, t_images *images, int tile_size)
 		if (!images->player[i])
 		{
 			ft_printf("Error: Failed to load player frame: %s\n", paths[i]);
+			while (--i >= 0)
+			{
+				mlx_destroy_image(mlx, images->player[i]);
+				images->player[i] = NULL;
+			}
 			return (0);
 		}
 		i++;
 	}
 	return (1);
-}
-void	update_player_frame(t_game *game)
-{
-	game->player_frame = (game->player_frame + 1) % 6;
 }
 
 void	render_player(t_game *game)
@@ -55,7 +56,9 @@ int	game_loop(void *param)
 	t_game	*game;
 
 	game = (t_game *)param;
-	update_player_frame(game);
+	if (!game || !game->images)
+		return (1);
+	game->player_frame = (game->player_frame + 1) % 6;
 	render_player(game);
 	return (0);
 }
@@ -65,9 +68,10 @@ int	main(int argc, char *argv[])
 	t_game	game;
 	int		row_count;
 
+	ft_memset(&game, 0, sizeof(t_game));
 	if (argc != 2)
 	{
-		write(STDERR_FILENO, "Error: Invalid arguments\n", 24);
+		write(STDERR_FILENO, "Error: \nInvalid arguments\n", 24);
 		return (EXIT_FAILURE);
 	}
 	game.tile_size = 40;
@@ -77,7 +81,7 @@ int	main(int argc, char *argv[])
 	game.map = parse_map(argv[1], &row_count);
 	if (!game.map)
 	{
-		write(STDERR_FILENO, "Error: Failed to parse map\n", 26);
+		write(STDERR_FILENO, "Error: \nFailed to parse map\n", 26);
 		return (EXIT_FAILURE);
 	}
 	game.rows = row_count;
@@ -87,18 +91,30 @@ int	main(int argc, char *argv[])
 		ensure_the_map_is_surrounded_by_walls(game.map, row_count) ||
 		validate_path(game.map, row_count))
 	{
-		free_string_array(game.map);
-		write(STDERR_FILENO, "Error: Invalid map\n", 20);
+		cleanup_game(&game);
+		write(STDERR_FILENO, "Error: \nInvalid map\n", 20);
 		return (EXIT_FAILURE);
 	}
 	game.mlx = mlx_init();
+	if (!game.mlx)
+	{
+		cleanup_game(&game);
+		write(STDERR_FILENO, "Error: \nFailed to initialize MLX\n", 31);
+		return (EXIT_FAILURE);
+	}
 	game.images = load_images(game.mlx, game.tile_size);
-	game.win = mlx_new_window(game.mlx, (game.cols - 1) * game.tile_size,
-			(game.rows) * game.tile_size, "So Long");
 	if (!game.images)
 	{
 		cleanup_game(&game);
-		write(STDERR_FILENO, "Error: Failed to load images\n", 28);
+		write(STDERR_FILENO, "Error: \nFailed to load images\n", 28);
+		return (EXIT_FAILURE);
+	}
+	game.win = mlx_new_window(game.mlx, (game.cols - 1) * game.tile_size,
+			(game.rows) * game.tile_size, "So Long");
+	if (!game.win)
+	{
+		cleanup_game(&game);
+		write(STDERR_FILENO, "Error: \nFailed to create window\n", 30);
 		return (EXIT_FAILURE);
 	}
 	render_map(&game);
@@ -106,5 +122,6 @@ int	main(int argc, char *argv[])
 	mlx_hook(game.win, KeyPress, KeyPressMask, handle_keypress, &game);
 	mlx_hook(game.win, DestroyNotify, NoEventMask, handle_close, &game);
 	mlx_loop(game.mlx);
+	cleanup_game(&game);
 	return (EXIT_SUCCESS);
 }
