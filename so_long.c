@@ -6,7 +6,7 @@
 /*   By: sodahani <sodahani@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/09 14:37:34 by sodahani          #+#    #+#             */
-/*   Updated: 2025/01/21 16:03:32 by sodahani         ###   ########.fr       */
+/*   Updated: 2025/01/21 16:36:03 by sodahani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,34 @@ int	load_player_frames(void *mlx, t_images *images, int tile_size)
 			{
 				mlx_destroy_image(mlx, images->player[i]);
 				images->player[i] = NULL;
+			}
+			return (0);
+		}
+		i++;
+	}
+	return (1);
+}
+
+int	load_enemy_frames(void *mlx, t_images *images, int tile_size)
+{
+	int	i;
+
+	char *paths[] = {
+		"textures/enemy1.xpm", "textures/enemy2.xpm", "textures/enemy3.xpm",
+			"textures/enemy4.xpm", "textures/enemy5.xpm", "textures/enemy6.xpm",
+			"textures/enemy7.xpm", "textures/enemy8.xpm"};
+	i = 0;
+	while (i < 8)
+	{
+		images->enemy[i] = mlx_xpm_file_to_image(mlx, paths[i], &tile_size,
+				&tile_size);
+		if (!images->enemy[i])
+		{
+			ft_printf("Error: Failed to load player frame: %s\n", paths[i]);
+			while (--i >= 0)
+			{
+				mlx_destroy_image(mlx, images->enemy[i]);
+				images->enemy[i] = NULL;
 			}
 			return (0);
 		}
@@ -87,6 +115,10 @@ void	render_player(t_game *game)
         {
             put_image(game, game->images->collectible[game->collectible_frame], col, row);
         }
+		if (game->map[row][col] == 'F')
+        {
+            put_image(game, game->images->enemy[game->enemy_frame], col, row);
+        }
         col++;
     }
     row++;
@@ -103,6 +135,7 @@ int	game_loop(void *param)
 		return (1);
 	game->player_frame = (game->player_frame + 1) % 6;
 	game->collectible_frame = (game->collectible_frame + 1) % 6;
+	game->enemy_frame = (game->enemy_frame + 1) % 6;
 	render_player(game);
 	while (i < __INT_MAX__ / 7)
 		i++;

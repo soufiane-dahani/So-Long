@@ -6,7 +6,7 @@
 /*   By: sodahani <sodahani@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/07 18:10:38 by sodahani          #+#    #+#             */
-/*   Updated: 2025/01/21 15:35:18 by sodahani         ###   ########.fr       */
+/*   Updated: 2025/01/21 16:39:19 by sodahani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,7 @@ void	free_string_array(char **arr)
 
 static int	validate_images(void *mlx, t_images *images)
 {
-	if (!images->wall || !images->floor || !images->exit
-		|| !images->enemy)
+	if (!images->wall || !images->floor || !images->exit)
 	{
 		free_img(mlx, images);
 		return (0);
@@ -49,10 +48,9 @@ t_images	*load_images(void *mlx, int tile_size)
 			&tile_size);
 	images->exit = mlx_xpm_file_to_image(mlx, "textures/exit.xpm", &tile_size,
 			&tile_size);
-	images->enemy = mlx_xpm_file_to_image(mlx, "textures/enemy.xpm", &tile_size,
-			&tile_size);
 	if (!load_player_frames(mlx, images, tile_size) || !validate_images(mlx,
-			images) || !load_collectible_frames(mlx, images, tile_size))
+			images) || !load_collectible_frames(mlx, images, tile_size)
+			|| !load_enemy_frames(mlx, images, tile_size))
 		return (NULL);
 	return (images);
 }
