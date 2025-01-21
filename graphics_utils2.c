@@ -6,7 +6,7 @@
 /*   By: sodahani <sodahani@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/12 19:05:36 by sodahani          #+#    #+#             */
-/*   Updated: 2025/01/20 11:26:18 by sodahani         ###   ########.fr       */
+/*   Updated: 2025/01/20 19:09:14 by sodahani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,6 +85,9 @@ void	cleanup_images(void *mlx, t_images *images)
 	if (images->floor)
 		mlx_destroy_image(mlx, images->floor);
 	images->floor = NULL;
+	if (images->enemy)
+		mlx_destroy_image(mlx, images->enemy);
+	images->enemy = NULL;
 	free(images);
 }
 

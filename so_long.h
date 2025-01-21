@@ -6,7 +6,7 @@
 /*   By: sodahani <sodahani@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/07 17:25:31 by sodahani          #+#    #+#             */
-/*   Updated: 2025/01/20 11:54:29 by sodahani         ###   ########.fr       */
+/*   Updated: 2025/01/20 19:05:25 by sodahani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,7 @@ int				search_ber(const char *file_path);
 char			**parse_map(const char *file_path, int *row_count);
 int				check_map_characters(char **map, int row_count);
 int				validate_map_shape(char **map, int row_count);
-int	ensure_the_map_is_surrounded_by_walls(char **map,
+int				ensure_the_map_is_surrounded_by_walls(char **map,
 											int row_count);
 void			free_visited(int **visited, int rows);
 int				count_and_check(char **map, t_map_info *info, int *reachable);
@@ -129,5 +129,6 @@ void			put_image(t_game *game, void *img, int col, int row);
 void			*ft_memset(void *s, int c, size_t n);
 void			cleanup_images(void *mlx, t_images *images);
 void			move_game_over(t_game *game, t_move old_pos, t_move new_pos);
+char			*ft_itoa(int n);
 
 #endif

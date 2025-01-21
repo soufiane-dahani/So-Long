@@ -6,7 +6,7 @@
 /*   By: sodahani <sodahani@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/12 19:05:33 by sodahani          #+#    #+#             */
-/*   Updated: 2025/01/20 11:21:42 by sodahani         ###   ########.fr       */
+/*   Updated: 2025/01/20 15:49:21 by sodahani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,14 @@
 
 void	update_position(t_game *game, t_move old_pos, t_move new_pos)
 {
+	char	*moves_str;
+
 	game->map[old_pos.row][old_pos.col] = '0';
 	game->map[new_pos.row][new_pos.col] = 'P';
 	game->player_row = new_pos.row;
 	game->player_col = new_pos.col;
 	if (new_pos.col != old_pos.col || new_pos.row != old_pos.row)
-		ft_printf("moves : %d\n", game->moves++);
+		ft_printf("moves : %d\n", ++game->moves);
 	if (mlx_clear_window(game->mlx, game->win) < 0)
 	{
 		ft_printf("Error: Failed to clear window\n");
@@ -27,7 +29,18 @@ void	update_position(t_game *game, t_move old_pos, t_move new_pos)
 		exit(EXIT_FAILURE);
 	}
 	render_map(game);
+	moves_str = ft_itoa(game->moves);
+	if (!moves_str)
+	{
+		ft_printf("Error: Failed to allocate memory for moves string\n");
+		cleanup_game(game);
+		exit(EXIT_FAILURE);
+	}
+		mlx_string_put(game->mlx, game->win, 20, 20, 0xFF0000, "Moves: ");
+	mlx_string_put(game->mlx, game->win, 80, 20, 0xFF0000, moves_str);
+	free(moves_str);
 }
+
 
 void	move_player(t_game *game, t_move old_pos, t_move new_pos)
 {

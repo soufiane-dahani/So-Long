@@ -6,7 +6,7 @@
 /*   By: sodahani <sodahani@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/07 18:09:03 by sodahani          #+#    #+#             */
-/*   Updated: 2025/01/12 18:36:50 by sodahani         ###   ########.fr       */
+/*   Updated: 2025/01/20 16:22:37 by sodahani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,8 @@ int	validate_map_shape(char **map, int row_count)
 	if (row_count <= 0 || !map || !map[0])
 		return (1);
 	first_row_length = get_row_length(map[0]);
+	if (first_row_length > 48 || row_count > 25)
+		return (1);
 	i = 1;
 	while (i < row_count)
 	{

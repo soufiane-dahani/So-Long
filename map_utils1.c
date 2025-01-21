@@ -6,7 +6,7 @@
 /*   By: sodahani <sodahani@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/12 18:07:57 by sodahani          #+#    #+#             */
-/*   Updated: 2025/01/19 18:05:00 by sodahani         ###   ########.fr       */
+/*   Updated: 2025/01/20 19:06:13 by sodahani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ void	flood_fill(char **map, t_map_info *info, int row, int col)
 {
 	if (row < 0 || col < 0 || row >= info->rows || col >= info->cols)
 		return ;
-	if (info->visited[row][col] || map[row][col] == '1')
+	if (info->visited[row][col] || map[row][col] == '1' || map[row][col] == 'F')
 		return ;
 	info->visited[row][col] = 1;
 	if (map[row][col] == 'E')
