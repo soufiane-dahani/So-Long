@@ -6,7 +6,7 @@
 /*   By: sodahani <sodahani@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/07 17:25:31 by sodahani          #+#    #+#             */
-/*   Updated: 2025/01/20 19:05:25 by sodahani         ###   ########.fr       */
+/*   Updated: 2025/01/21 16:03:21 by sodahani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ typedef struct s_images
 {
 	void		*wall;
 	void		*floor;
-	void		*collectible;
+	void		*collectible[6];
 	void		*exit;
 	void		*player[6];
 	void		*enemy;
@@ -71,6 +71,7 @@ typedef struct s_game
 	int			player_row;
 	int			player_col;
 	int			player_frame;
+	int			collectible_frame;
 	t_images	*images;
 }				t_game;
 
@@ -130,5 +131,9 @@ void			*ft_memset(void *s, int c, size_t n);
 void			cleanup_images(void *mlx, t_images *images);
 void			move_game_over(t_game *game, t_move old_pos, t_move new_pos);
 char			*ft_itoa(int n);
+
+
+int	load_collectible_frames(void *mlx, t_images *images, int tile_size);
+
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: sodahani <sodahani@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/09 14:37:34 by sodahani          #+#    #+#             */
-/*   Updated: 2025/01/20 19:03:51 by sodahani         ###   ########.fr       */
+/*   Updated: 2025/01/21 16:03:32 by sodahani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,27 +39,73 @@ int	load_player_frames(void *mlx, t_images *images, int tile_size)
 	return (1);
 }
 
+int	load_collectible_frames(void *mlx, t_images *images, int tile_size)
+{
+	int	i;
+
+	char *paths[] = {
+		"textures/collectible8.xpm", "textures/collectible9.xpm", "textures/collectible10.xpm",
+			"textures/collectible11.xpm", "textures/collectible12.xpm", "textures/collectible13.xpm"};
+	i = 0;
+	while (i < 6)
+	{
+		images->collectible[i] = mlx_xpm_file_to_image(mlx, paths[i], &tile_size,
+				&tile_size);
+		if (!images->collectible[i])
+		{
+			ft_printf("Error: Failed to load player frame: %s\n", paths[i]);
+			while (--i >= 0)
+			{
+				mlx_destroy_image(mlx, images->collectible[i]);
+				images->collectible[i] = NULL;
+			}
+			return (0);
+		}
+		i++;
+	}
+	return (1);
+}
+
 void	render_player(t_game *game)
 {
 	int	player_row;
 	int	player_col;
+	int	row = 0;
+	int col;
 
 	player_row = game->player_row;
 	player_col = game->player_col;
 	player_postion_move(game->map, &player_col, &player_row);
 	put_image(game, game->images->player[game->player_frame], player_col,
 			player_row);
+	while (game->map[row])
+	{
+    col = 0;
+    while (game->map[row][col])
+    {
+        if (game->map[row][col] == 'C')
+        {
+            put_image(game, game->images->collectible[game->collectible_frame], col, row);
+        }
+        col++;
+    }
+    row++;
+	}
 }
+
 
 int	game_loop(void *param)
 {
 	t_game	*game;
-
+	int i = 0;
 	game = (t_game *)param;
 	if (!game || !game->images)
 		return (1);
 	game->player_frame = (game->player_frame + 1) % 6;
+	game->collectible_frame = (game->collectible_frame + 1) % 6;
 	render_player(game);
+	while (i < __INT_MAX__ / 7)
+		i++;
 	return (0);
 }
 

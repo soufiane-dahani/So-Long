@@ -6,7 +6,7 @@
 /*   By: sodahani <sodahani@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/12 19:05:36 by sodahani          #+#    #+#             */
-/*   Updated: 2025/01/20 19:09:14 by sodahani         ###   ########.fr       */
+/*   Updated: 2025/01/21 16:03:48 by sodahani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,12 +73,17 @@ void	cleanup_images(void *mlx, t_images *images)
 		images->player[i] = NULL;
 		i++;
 	}
+	i = 0;
+	while (i < 6)
+	{
+		if (images->collectible[i])
+			mlx_destroy_image(mlx, images->collectible[i]);
+		images->collectible[i] = NULL;
+		i++;
+	}
 	if (images->wall)
 		mlx_destroy_image(mlx, images->wall);
 	images->wall = NULL;
-	if (images->collectible)
-		mlx_destroy_image(mlx, images->collectible);
-	images->collectible = NULL;
 	if (images->exit)
 		mlx_destroy_image(mlx, images->exit);
 	images->exit = NULL;

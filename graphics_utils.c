@@ -6,7 +6,7 @@
 /*   By: sodahani <sodahani@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/12 19:05:28 by sodahani          #+#    #+#             */
-/*   Updated: 2025/01/20 19:06:22 by sodahani         ###   ########.fr       */
+/*   Updated: 2025/01/21 15:36:28 by sodahani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,6 @@ void	render_map(t_game *game)
 			put_image(game, game->images->floor, col, row);
 			if (game->map[row][col] == '1')
 				put_image(game, game->images->wall, col, row);
-			else if (game->map[row][col] == 'C')
-				put_image(game, game->images->collectible, col, row);
 			else if (game->map[row][col] == 'E')
 				put_image(game, game->images->exit, col, row);
 			else if (game->map[row][col] == 'F')
