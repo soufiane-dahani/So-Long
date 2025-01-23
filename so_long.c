@@ -6,7 +6,7 @@
 /*   By: sodahani <sodahani@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/09 14:37:34 by sodahani          #+#    #+#             */
-/*   Updated: 2025/01/21 18:03:03 by sodahani         ###   ########.fr       */
+/*   Updated: 2025/01/23 11:25:10 by sodahani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ static int	init_mlx_components(t_game *game)
 static void	setup_mlx_hooks(t_game *game)
 {
 	mlx_loop_hook(game->mlx, game_loop, game);
-	mlx_hook(game->win, KeyPress, KeyPressMask, handle_keypress, game);
+	mlx_key_hook(game->win, handle_keypress, game);
 	mlx_hook(game->win, DestroyNotify, NoEventMask, handle_close, game);
 }
 
