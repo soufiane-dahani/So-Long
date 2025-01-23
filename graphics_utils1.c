@@ -36,11 +36,10 @@ void	update_position(t_game *game, t_move old_pos, t_move new_pos)
 		cleanup_game(game);
 		exit(EXIT_FAILURE);
 	}
-		mlx_string_put(game->mlx, game->win, 20, 20, 0xFF0000, "Moves: ");
+	mlx_string_put(game->mlx, game->win, 20, 20, 0xFF0000, "Moves: ");
 	mlx_string_put(game->mlx, game->win, 80, 20, 0xFF0000, moves_str);
 	free(moves_str);
 }
-
 
 void	move_player(t_game *game, t_move old_pos, t_move new_pos)
 {

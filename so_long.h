@@ -6,7 +6,7 @@
 /*   By: sodahani <sodahani@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/07 17:25:31 by sodahani          #+#    #+#             */
-/*   Updated: 2025/01/21 16:31:37 by sodahani         ###   ########.fr       */
+/*   Updated: 2025/01/23 10:39:21 by sodahani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,8 +71,8 @@ typedef struct s_game
 	int			player_row;
 	int			player_col;
 	int			player_frame;
-	int			collectible_frame;
-	int			enemy_frame;
+	int			c_frame;
+	int			e_frame;
 	t_images	*images;
 }				t_game;
 
@@ -89,7 +89,7 @@ char			**parse_map(const char *file_path, int *row_count);
 int				check_map_characters(char **map, int row_count);
 int				validate_map_shape(char **map, int row_count);
 int				ensure_the_map_is_surrounded_by_walls(char **map,
-											int row_count);
+					int row_count);
 void			free_visited(int **visited, int rows);
 int				count_and_check(char **map, t_map_info *info, int *reachable);
 int				init_visited_and_player(char **map, t_map_info *info);
@@ -133,8 +133,13 @@ void			cleanup_images(void *mlx, t_images *images);
 void			move_game_over(t_game *game, t_move old_pos, t_move new_pos);
 char			*ft_itoa(int n);
 
-
-int	load_collectible_frames(void *mlx, t_images *images, int tile_size);
-int	load_enemy_frames(void *mlx, t_images *images, int tile_size);
-
+int				load_collectible_frames(void *mlx, t_images *images,
+					int tile_size);
+int				load_enemy_frames(void *mlx, t_images *images, int tile_size);
+int				load_player_frames(void *mlx, t_images *images, int tile_size);
+void			render_player(t_game *game);
+int				game_loop(void *param);
+int				init_game_struct(t_game *game, char *map_path, int *row_count);
+int				validate_images(void *mlx, t_images *images);
+void			initialize_player_paths(char **paths);
 #endif

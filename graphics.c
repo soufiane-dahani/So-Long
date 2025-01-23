@@ -6,7 +6,7 @@
 /*   By: sodahani <sodahani@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/07 18:10:00 by sodahani          #+#    #+#             */
-/*   Updated: 2025/01/20 11:27:29 by sodahani         ###   ########.fr       */
+/*   Updated: 2025/01/21 18:11:05 by sodahani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,9 +30,9 @@ void	init_window(t_game *game, int rows, int cols, int tile_size)
 	if (!game->mlx)
 		return ;
 	game->win = mlx_new_window(game->mlx,
-								cols * tile_size,
-								rows * tile_size,
-								"So Long!");
+			cols * tile_size,
+			rows * tile_size,
+			"So Long!");
 	if (!game->win)
 	{
 		mlx_destroy_display(game->mlx);

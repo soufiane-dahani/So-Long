@@ -6,7 +6,7 @@
 /*   By: sodahani <sodahani@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/12 19:05:28 by sodahani          #+#    #+#             */
-/*   Updated: 2025/01/21 16:38:53 by sodahani         ###   ########.fr       */
+/*   Updated: 2025/01/23 10:09:12 by sodahani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 void	put_image(t_game *game, void *img, int col, int row)
 {
 	mlx_put_image_to_window(game->mlx, game->win, img, col * game->tile_size,
-			row * game->tile_size);
+		row * game->tile_size);
 }
 
 void	render_map(t_game *game)

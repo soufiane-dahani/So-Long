@@ -6,7 +6,7 @@
 /*   By: sodahani <sodahani@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/12 19:05:36 by sodahani          #+#    #+#             */
-/*   Updated: 2025/01/21 16:38:19 by sodahani         ###   ########.fr       */
+/*   Updated: 2025/01/21 18:06:26 by sodahani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,48 +57,6 @@ void	*ft_memset(void *s, int c, size_t n)
 		i++;
 	}
 	return (s);
-}
-
-void	cleanup_images(void *mlx, t_images *images)
-{
-	int	i;
-
-	if (!mlx || !images)
-		return ;
-	i = 0;
-	while (i < 6)
-	{
-		if (images->player[i])
-			mlx_destroy_image(mlx, images->player[i]);
-		images->player[i] = NULL;
-		i++;
-	}
-	i = 0;
-	while (i < 6)
-	{
-		if (images->collectible[i])
-			mlx_destroy_image(mlx, images->collectible[i]);
-		images->collectible[i] = NULL;
-		i++;
-	}
-	i = 0;
-	while (i < 8)
-	{
-		if (images->enemy[i])
-			mlx_destroy_image(mlx, images->enemy[i]);
-		images->enemy[i] = NULL;
-		i++;
-	}
-	if (images->wall)
-		mlx_destroy_image(mlx, images->wall);
-	images->wall = NULL;
-	if (images->exit)
-		mlx_destroy_image(mlx, images->exit);
-	images->exit = NULL;
-	if (images->floor)
-		mlx_destroy_image(mlx, images->floor);
-	images->floor = NULL;
-	free(images);
 }
 
 void	move_game_over(t_game *game, t_move old_pos, t_move new_pos)
