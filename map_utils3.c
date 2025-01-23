@@ -6,7 +6,7 @@
 /*   By: sodahani <sodahani@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/12 18:34:27 by sodahani          #+#    #+#             */
-/*   Updated: 2025/01/12 18:38:42 by sodahani         ###   ########.fr       */
+/*   Updated: 2025/01/23 17:15:47 by sodahani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,12 @@
 char	**read_map_lines(t_parse_vars *vars)
 {
 	vars->line = get_next_line(vars->fd);
+	if (!vars->line)
+	{
+		free(vars->map);
+		ft_printf("Error\n");
+		exit(1);
+	}
 	while (vars->line != NULL)
 	{
 		if (!process_map_line(vars))
